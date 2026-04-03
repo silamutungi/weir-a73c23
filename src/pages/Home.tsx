@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Shield, TrendingUp, Zap, Globe, Lock, BarChart3, CheckCircle } from 'lucide-react'
+import { Shield, TrendingUp, Globe, Lock, BarChart3, CheckCircle } from 'lucide-react'
 import { Button } from '../components/ui/button'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
