@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Shield, Menu, X, UserCircle } from 'lucide-react'
 import { supabase } from '../lib/supabase'
@@ -7,10 +7,13 @@ import { Button } from './ui/button'
 export default function Navbar() {
   const navigate = useNavigate()
   const [open, setOpen] = useState(false)
-  const [session] = useState(() => {
-    const s = supabase.auth.getSession()
-    return s
-  })
+  const [session, setSession] = useState<unknown>(null)
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => setSession(data.session))
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, s) => setSession(s))
+    return () => subscription.unsubscribe()
+  }, [])
 
   async function handleLogout() {
     await supabase.auth.signOut()
